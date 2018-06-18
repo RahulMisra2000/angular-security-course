@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable, BehaviorSubject} from "rxjs";
 import {User} from "../model/user";
 
+
 export const ANONYMOUS_USER: User = {
     id: undefined,
     email: undefined,
@@ -15,18 +16,26 @@ export const ANONYMOUS_USER: User = {
 @Injectable()
 export class AuthService {
 
+// CREATE SOME OBSERVABLES
+    // Right off the bat undefined is placed in the Observable stream
     private subject = new BehaviorSubject<User>(undefined);
 
+    // Stuff from the subject observable stream will find its way into the user$ observable stream provided the stuff
+    // resolves to truthy
+    // So, the undefined that we placed in the observable stream will fail the filter defined below and the undefined will NOT
+    // be placed in the user$ observable stream.
     user$: Observable<User> = this.subject.asObservable().pipe(filter(user => !!user));
 
+// Components and their templates can subscribe to these observables to know if the user is logged in or not
     isLoggedIn$: Observable<boolean> = this.user$.pipe(map(user => !!user.id));
-
     isLoggedOut$: Observable<boolean> = this.isLoggedIn$.pipe(map(isLoggedIn => !isLoggedIn));
 
     constructor(private http: HttpClient) {
-        http.get<User>('/api/user').pipe(
-            tap(console.log))
-            .subscribe(user => this.subject.next(user ? user : ANONYMOUS_USER));
+        http.get<User>('/api/user')
+          .pipe(
+                tap(console.log)
+               )
+          .subscribe(user => this.subject.next(user ? user : ANONYMOUS_USER));
     }
 
     signUp(email:string, password:string ) {
