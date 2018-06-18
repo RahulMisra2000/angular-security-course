@@ -1,3 +1,7 @@
+// This says that any url that starts with /api should be redirected to the application running at target:
+// secure: false means that the application (angular) that makes the /api request should NOT negotiate https with the target ..
+// The target happens to be a node Web API server ...
+
 {
   "/api": {
     "target": "https://localhost:9000",
