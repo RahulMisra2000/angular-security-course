@@ -12,6 +12,12 @@
         <li>
             <a routerLink="/admin">Admin</a>
         </li>
+      
+      
+<!-- isLoggedOut$ is an Observable<boolean> so, if a true is shoved (.next) into the stream then the expression will 
+evaluate to true and the *ngIf will create the DOM node correspongind to <li element. The async pipe below is how we 
+subscibe to an observable and gets a value from the stream inside a template (.html) 
+-->
         <li *ngIf="isLoggedOut$ | async">
             <a routerLink="/signup">Sign Up</a>
         </li>
@@ -30,7 +36,9 @@
         <h3>Angular Security MasterClass</h3>
         <img class="course-logo"
              src="https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-security-thumbnail.png">
-
+<!-- Similarly here if the user$ observable stream gets some data that resolves to truthy then the <ng-container will 
+be created. If it resolves to false then it won't 
+-->
         <ng-container *ngIf="(user$ | async) as user">
 
             <h4 class="user-email" *ngIf="user.email">{{user.email}}</h4>
