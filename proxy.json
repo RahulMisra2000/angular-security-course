@@ -1,5 +1,7 @@
-// This says that any url that starts with /api should be redirected to the application running at target:
-// secure: false means that the application (angular) that makes the /api request should NOT negotiate https with the target ..
+// means that when the Angular router sees a request to something starting with /api it should redirect it to the application 
+// running at target:
+// secure: false means that when the Angular router sees a request to something starting with /api it should NOT negotiate 
+// https with the target ..
 // The target happens to be a node Web API server ...
 
 {
