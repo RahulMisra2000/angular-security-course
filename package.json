@@ -12,16 +12,18 @@
  // ******************************************************************* Starting the FRONT-END Angular Application
  // Uses the proxt-config ... Take a look at it ....
  // It says, if the url starts with /api then please redirect the request to the backend node web api server
+ "}
     "start": "ng serve --proxy-config ./proxy.json --ssl angular-security-course --ssl-key key.pem --ssl-cert cert.pem",
  
-    
+ {"//":"      
  // ******************************************************************* Starting the BACKEND node WEB API server 
  // *********** ts-node allows you to run node programs written in typescript
  // --secure is the argument that is being sent to server.ts 
  // Look at server.ts to see how that argument is used
+ "}
     "start-server": "./node_modules/.bin/ts-node ./server/server.ts --secure",
     
-    
+ {"//":"      
  // ******************************************************************* Restart BACKEND WEB API server if server code changes    
  // *********** nodemon will watch (-w) for all .ts files in the server folder and if they change it will execute (--exec) 
  // the command... npm run start-server .... which will run the above command
