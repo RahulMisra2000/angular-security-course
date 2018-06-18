@@ -26,29 +26,27 @@ app.use(bodyParser.json());
 
 const commandLineArgs = require('command-line-args');
 
+// Here we are defining the command line arguments that this server.ts will receive
 const optionDefinitions = [
     { name: 'secure', type: Boolean,  defaultOption: true },
 ];
 
+// The command line arguments will be available to us 
 const options = commandLineArgs(optionDefinitions);
 
 // REST API
-app.route('/api/lessons')
-    .get(checkIfAuthenticated, readAllLessons);
+app.route('/api/lessons').get(checkIfAuthenticated, readAllLessons);
 
-app.route('/api/signup')
-    .post(createUser);
+app.route('/api/signup').post(createUser);
 
-app.route('/api/user')
-    .get(getUser);
+app.route('/api/user').get(getUser);
 
-app.route('/api/logout')
-    .post(checkIfAuthenticated, checkCsrfToken, logout);
+app.route('/api/logout').post(checkIfAuthenticated, checkCsrfToken, logout);
 
-app.route('/api/login')
-    .post(login);
+app.route('/api/login').post(login);
 
 
+// LAUNCH HTTPS Server
 if (options.secure) {
 
     const httpsServer = https.createServer({
@@ -61,8 +59,7 @@ if (options.secure) {
 
 }
 else {
-
-    // launch an HTTP Server
+// LAUNCH HTTP Server    
     const httpServer = app.listen(9000, () => {
         console.log("HTTP Server running at https://localhost:" + httpServer.address().port);
     });
