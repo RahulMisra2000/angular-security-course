@@ -12,7 +12,7 @@ import {createCsrfToken, createSessionToken} from "./security.utils";
 export function createUser(req: Request, res:Response) {
 
     const credentials = req.body;
-    const errors = validatePassword(credentials.password);                // Make sure the password is valid
+    const errors = validatePassword(credentials.password);                // Make sure the password follows certain rules
 
     if (errors.length > 0) {
         res.status(400).json({errors});
