@@ -15,7 +15,6 @@ schema
     .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
 
 
-
 export function validatePassword(password:string) {
     return schema.validate(password, {list:true});
 }
