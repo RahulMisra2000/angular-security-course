@@ -19,9 +19,13 @@ export class AppComponent  implements OnInit {
     }
 
     ngOnInit() {
-        this.isLoggedIn$ = this.authService.isLoggedIn$;
+      
+        // Assigning the Observables defined in the Service to local variables here in the component
+        // so that this component and also its template (.html) will know when/what values are being emitted (.next()) in the observable 
+        // so they can make decisions based on it
+        this.isLoggedIn$  = this.authService.isLoggedIn$;
         this.isLoggedOut$ = this.authService.isLoggedOut$;
-        this.user$ = this.authService.user$;
+        this.user$        = this.authService.user$;
     }
 
     logout() {
