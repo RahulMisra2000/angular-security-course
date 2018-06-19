@@ -1,7 +1,7 @@
 import {decodeJwt} from "./security.utils";
 import {Request, Response, NextFunction} from 'express';
 
-// This middleware basically pulls out the jwt token from inside a cookie called SESSIONID (if this cookie exists in the http request)
+// This MIDDLEWARE basically pulls out the jwt token from inside a cookie called SESSIONID (if this cookie exists in the http request)
 // and creates a property on the http request object (and populates it with the payload from the jwt token).
 // So, anything downstream in the processing of this http request will have access to this payload information.
 export function retrieveUserIdFromRequest(req: Request, res: Response, next: NextFunction) {
