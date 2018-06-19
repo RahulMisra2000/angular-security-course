@@ -6,11 +6,7 @@ import {validatePassword} from "./password-validation";
 import moment = require("moment");
 import {createCsrfToken, createSessionToken} from "./security.utils";
 
-
-
-
 export function createUser(req: Request, res:Response) {
-
     const credentials = req.body;
     const errors = validatePassword(credentials.password);                // Make sure the password follows certain rules
 
@@ -23,9 +19,7 @@ export function createUser(req: Request, res:Response) {
                                         console.log("Error creating new user", err);
                                         res.sendStatus(500);
         });
-
     }
-
 }
 
 async function createUserAndCookies(res:Response, credentials) {
