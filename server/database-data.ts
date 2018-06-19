@@ -1,5 +1,9 @@
 import {DbUser} from "./db-user";
 
+
+// Understand this type { [key: number]: DbUser }
+// It is saying that there is one object and inside it you have something that is of type number and its type is DbUser
+
 export const USERS: { [key: number]: DbUser } = {
     1: {
         id: 1,
