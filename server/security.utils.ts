@@ -26,6 +26,7 @@ export async function createSessionToken(user: DbUser) {
 }
 
 // Makes sure that the JWT token is kosher and then extracts the payload out of it and returns it to the caller
+// Don't use this exactly in production code because there is no try catch block to catch errors ...
 export async function decodeJwt(token:string) {
     const payload = await jwt.verify(token, RSA_PUBLIC_KEY);
     console.log("decoded JWT payload", payload);
