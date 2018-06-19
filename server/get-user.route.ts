@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 import {db} from "./database";
 
 export function getUser(req:Request, res:Response) {
-    const userInfo = req["user"];
+    const userInfo = req["user"];                     // The middleware placed stuff in the req["user"]
 
     if (userInfo) {
         const user = db.findUserById(userInfo.sub);
