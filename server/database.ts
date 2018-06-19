@@ -46,7 +46,6 @@ class InMemoryDatabase {
         console.log("Finding user by email:", email);
 
         const users = _.values(USERS);
-
         const user = _.find(users, user => user.email === email);
 
         console.log("user retrieved:", user);
