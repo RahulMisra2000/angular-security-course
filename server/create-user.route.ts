@@ -29,7 +29,12 @@ async function createUserAndCookies(res:Response, credentials) {
     const csrfToken       = await createCsrfToken();                         // create a random token
 
     // Create a cookied called SESSSIONID (can be any name) 
+    // We don't want javascript on the client-side to have any access (think document.cookie) to this cookie - hence httpOnly:true
     res.cookie("SESSIONID", sessionToken, {httpOnly:true, secure:true});  // create a cookie and shove the jwt inside
+  
+    // We want this cookie's content to be accessible by client-side javascript so we can ask Angular HttpClientXsrfModule to 
+    // read its contents and shove it in the Http Header (I think internally it does it using Http Interceptor)
+    // That is why we don't say HttpOnly: true ... and so the default of false is applied
     res.cookie("XSRF-TOKEN", csrfToken);
     res.status(200).json({id:user.id, email:user.email, roles: user.roles});
 }
