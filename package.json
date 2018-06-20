@@ -12,6 +12,8 @@
  // ******************************************************************* Starting the FRONT-END Angular Application
  // Uses the proxt-config ... Take a look at it ....
  // It says, if the url starts with /api then please redirect the request to the backend node web api server
+ // See we are providing ssl keys and stuff to the ng serve so that we may be able to connect to our Angular application
+ // using https
  "}
     "start": "ng serve --proxy-config ./proxy.json --ssl angular-security-course --ssl-key key.pem --ssl-cert cert.pem",
  
