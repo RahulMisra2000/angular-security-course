@@ -14,19 +14,6 @@ import {AuthService} from "./services/auth.service";
 import { AdminComponent } from './admin/admin.component';
 import { RouterModule} from "@angular/router";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +25,8 @@ import { RouterModule} from "@angular/router";
   imports: [
     BrowserModule,
       HttpClientModule,
+    
+      // This reads the content of the cookie and places it in an HTTP Header **************************
       HttpClientXsrfModule.withOptions({
          cookieName: 'XSRF-TOKEN',
          headerName:  'x-xsrf-token'
