@@ -7,6 +7,8 @@ import * as argon2 from 'argon2';
 import {DbUser} from "./db-user";
 
 
+// The promisify() function takes a function that is written using the callback method and returns a function
+// that works the promise way .... Later down, see how the randomBytes() function is called ....
 export const randomBytes = util.promisify(crypto.randomBytes);
 
 export const signJwt = util.promisify(jwt.sign);
