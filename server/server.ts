@@ -19,7 +19,12 @@ const cookieParser = require('cookie-parser');
 
 const app: Application = express();
 
+// This 3rd party Middleware I THINK attaches all the cookies that have come for a ride with HTTP call to the HTTP request 
+// object's cookies property, so it can be accessed by doing req.cookies['name of the cookie']
 app.use(cookieParser());
+
+// This is a custom middleware that stuffs user id (which is inside the jwt token which is inside a cookie) into the user property of
+// the HTTP Request object so, that anything downstream can have access to the user id
 app.use(retrieveUserIdFromRequest);
 app.use(bodyParser.json());
 
@@ -31,19 +36,16 @@ const optionDefinitions = [
     { name: 'secure', type: Boolean,  defaultOption: true },
 ];
 
-// The command line arguments will be available to us 
+// The command line arguments will be available to us in options object
 const options = commandLineArgs(optionDefinitions);
 
-// REST API
-app.route('/api/lessons').get(checkIfAuthenticated, readAllLessons);
-
+// REST API ***********************************************************************************************************
+app.route('/api/lessons').get(checkIfAuthenticated, readAllLessons);          // Route protected by Middleware
 app.route('/api/signup').post(createUser);
-
 app.route('/api/user').get(getUser);
-
-app.route('/api/logout').post(checkIfAuthenticated, checkCsrfToken, logout);
-
+app.route('/api/logout').post(checkIfAuthenticated, checkCsrfToken, logout);  // Route protected by Middleware
 app.route('/api/login').post(login);
+// REST API ***********************************************************************************************************
 
 
 // LAUNCH HTTPS Server
