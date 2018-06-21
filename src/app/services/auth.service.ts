@@ -31,6 +31,18 @@ export class AuthService {
     isLoggedIn$: Observable<boolean> = this.user$.pipe(map(user => !!user.id));
     isLoggedOut$: Observable<boolean> = this.isLoggedIn$.pipe(map(isLoggedIn => !isLoggedIn));
 
+  
+
+  // ********* The AppComponent (bootstrap component) DIs this service so an instance of this service is created and given to the 
+  // AppComponent. And since this service is registered with the AppModule, it is a singleton.
+  // Which means the constructor gets executed before even the AppComponent is rendered .... and that is why in the constructor 
+  // we call the /api/user Web API endpoint because it returns the user record ... whose userid is inside the jwt token which is 
+  // inside the cookie.... The middleware on the Web API server unravels the cookie and extracts the userid from inside the jwt token 
+  // which is inside the cookie ... This userid is used to find the user corresponding to the userid. That user is returned here ...
+  // of course it will be returned provided the cookie exists ... the jwt inside it is kosher ... the userid inside the jwt payload
+  // exists and using it we are able to access the user record from the database .... if there is any problem in this chain then
+  // the endpoint returns undefined for the user .... and that is why we emit (next()) an ANONYMOUS user in that case ....
+  // THE POINT IS .... that the Angular Application knows if the user is authenticated or not VERY EARLY ON ....... 
     constructor(private http: HttpClient) {
         http.get<User>('/api/user')
           .pipe(
