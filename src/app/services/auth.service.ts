@@ -2,6 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
 // *********** We are using the auth0-js javascript library to talk to Auth0
+//             so that we don't have to take the trouble of making direct HTTP calls to Auth0 endpoints to talk to Auth0
+//             we let the let the library do all the heavy lifting and we just make calls to the librarie's API
+//             like .authorize(), .parseHash(), etc.
 import * as auth0 from 'auth0-js';
 
 import {Router} from "@angular/router";
