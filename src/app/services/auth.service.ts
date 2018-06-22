@@ -37,6 +37,9 @@ export class AuthService {
     }
 
     login() {
+        // If using Universal Login, which is the default, this will redirect our Angular Application to Auth0's login screen
+        // and after a successful entry of username/pwd, Auth0 will redirect to the url we specify as the callback url. This needs to be
+        // specified BOTH at the Auth0 portal and also in our code (see redirectUri : property above)
         this.auth0.authorize({initialScreen:'login'});
     }
 
@@ -44,8 +47,8 @@ export class AuthService {
         this.auth0.authorize({initialScreen:'signUp'});
     }
 
-    retrieveAuthInfoFromUrl() {
-      
+  
+    retrieveAuthInfoFromUrl() {  
         // Auth0 after authenticating, creates jwt token and places it after the # symbol in the callback url we specify to Auth0
         // This method .parseHash() reads the address bar and populates the 2nd parameter (authResult) with it so, we can access it
         this.auth0.parseHash((err, authResult) => {
@@ -76,6 +79,7 @@ export class AuthService {
         this.router.navigate(['/lessons']);
     }
 
+    // Just checks if at THIS VERY moment, the jwt token in the localStorage has expired or not
     public isLoggedIn() {
         return moment().isBefore(this.getExpiration());
     }
