@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+
+// *********** We are using the auth0-js javascript library to talk to Auth0
 import * as auth0 from 'auth0-js';
+
 import {Router} from "@angular/router";
 import * as moment from "moment";
 import {User} from "../model/user";
@@ -58,12 +61,12 @@ export class AuthService {
         this.auth0.authorize({initialScreen:'signUp'});       // This API shows the signup
     }
 
-    
     // Our callback url page should call this method.
     // In our example, the callback url we have told Auth0 about it https://localhost:4200/lessons
     // So, whichever Angular component that is, in its ngOnInit we should call the method below
     retrieveAuthInfoFromUrl() {  
         // Auth0 after authenticating, creates token(s) and places them after the # symbol in the callback url we specify to Auth0
+        // In our example since we have requested the Idenity Token and Access Token, we will be receiving both
         // This method .parseHash() reads the address bar and populates the 2nd parameter (authResult) with it so, we can access it
         this.auth0.parseHash((err, authResult) => {   // authResult is the javascript object created for us and it contains the stuff after the #
             if (err) {
