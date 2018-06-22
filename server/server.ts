@@ -59,7 +59,7 @@ app.use((err, req, res, next) => {
 
 // REST API
 app.route('/api/lessons').get(readAllLessons);
-app.route('/api/userinfo').put(userInfo);
+app.route('/api/userinfo').put(userInfo);       // Adds user to OUR DATABASE and returns his email address
 
 
 if (options.secure) {
