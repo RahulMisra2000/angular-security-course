@@ -40,10 +40,13 @@ export class AuthService {
         // If using Universal Login, which is the default, this will redirect our Angular Application to Auth0's login screen
         // and after a successful entry of username/pwd, Auth0 will redirect to the url we specify as the callback url. This needs to be
         // specified BOTH at the Auth0 portal and also in our code (see redirectUri : property above)
+      
+        // auth0 is a javascript library provided by Auth0
         this.auth0.authorize({initialScreen:'login'});
     }
 
     signUp() {
+        // auth0 is a javascript library provided by Auth0
         this.auth0.authorize({initialScreen:'signUp'});
     }
 
