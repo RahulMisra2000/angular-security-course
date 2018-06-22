@@ -14,6 +14,10 @@ export function userInfo(req:Request, res:Response) {
         user = db.createUser(userInfo.email,userInfo.sub);
     }
 
+    // We can send back anything about the user that we have in the database.
+    // There is very limited stuff that we can get back from Social Providers or even Enterprise Providers about the user...
+    // so, because we are ALSO creating a User table in OUR Database ... anything we save about the user in there can be returned here
+    
     res.status(200).json({email:user.email});
 
 }
