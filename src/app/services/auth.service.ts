@@ -42,12 +42,12 @@ export class AuthService {
         // specified BOTH at the Auth0 portal and also in our code (see redirectUri : property above)
       
         // auth0 is a javascript library provided by Auth0
-        this.auth0.authorize({initialScreen:'login'});
+        this.auth0.authorize({initialScreen:'login'});        // This API shows the login
     }
 
     signUp() {
         // auth0 is a javascript library provided by Auth0
-        this.auth0.authorize({initialScreen:'signUp'});
+        this.auth0.authorize({initialScreen:'signUp'});       // This API shows the signup
     }
 
   
