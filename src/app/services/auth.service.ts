@@ -29,11 +29,12 @@ export class AuthService {
         // token    : we are asking Auth0 to return the Access Token after successful authentication
         // id_token : we are asking Auth0 to return the Identity Token after successful authentication
         responseType: 'token id_token',
-        // we are asking Auth0 to redirect the user's browser to the provided url after authentication
+        // we are asking Auth0 to place the goodies (tokens) as hash fragments at the end of this url and then 
+        // redirect the user's browser to the url after authentication
         redirectUri: 'https://localhost:4200/lessons',   
       
         // scope: We are asking Auth0 WHICH claims it should stuff inside the Identity Token payload
-        // openid : means these claims --- iss, iat, aud, exp claims 
+        // openid : means these claims --- iss, iat, aud, sub and exp
         // email  : means the email
         scope: 'openid email' 
     });
@@ -57,8 +58,13 @@ export class AuthService {
     }
 
     signUp() {
-        // auth0 is a javascript library provided by Auth0
+        // auth0 is a javascript library provided by Auth0 whose .authorize() API we can call instead of making the http call ourselves
         this.auth0.authorize({initialScreen:'signUp'});       // This API shows the signup
+        
+        // if we didn't use the auth0-js library then we would have to make an http call to the  https://AUTH_CONFIG.domain/authorize 
+        // endpoint and provide a lot of parameters (the ones we are defining above at the time of creating the auth0 object )
+        // For more info: https://auth0.com/docs/application-auth/current/client-side-web#call-the-authorization-url
+      
     }
 
     // Our callback url page should call this method.
