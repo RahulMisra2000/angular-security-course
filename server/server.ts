@@ -7,10 +7,27 @@ import {userInfo} from "./user-info.route";
 const bodyParser = require('body-parser');
 
 // These javascript libraries provide API that help us verify the JWT Token that the front-end Angular 
-// application sends to this Resource Server
-// ********** These libraries can be used with OTHER Auth Providers and NOT JUST Auth0 because they are standards based open source
+// application has sent to this Resource Server
+// ********** These libraries can also be used with OTHER Auth Providers and NOT JUST Auth0 because they are standards based open source
 //            libraries.
+
+
+// *********** We are using the jwks-rsa javascript library to talk to Auth0
+//             so that we don't have to take the trouble of making direct HTTP calls to Auth0 endpoints to talk to Auth0
+//             we let the let the library do all the heavy lifting and we just make calls to the librarie's API
+
+//             In this particular example we are using the librarie's expressJwtSecret() API to bring over the Public Key from
+//             our account in the Auth0 Portal that corresponds to the private key (also on the Auth0 portal)
 const jwksRsa = require('jwks-rsa');
+
+
+
+//             We are using this library which returns an Express Middleware that will 
+//             extract the JWT token from this Http Header -> Authorization: Bearer <jwt token>
+//             and then verifies it for kosherness ...
+//             If it passes verification then it adds the payload in the jwt to the Http Request Object's .user property so downstreamers
+//             have access to it
+//             If it failes verification then it creates an err object whose name property is assigned "UnauthorizedError"
 const jwt = require('express-jwt');
 
 
@@ -26,10 +43,12 @@ const optionDefinitions = [
 const options = commandLineArgs(optionDefinitions);
 
 
-// This CREATES a MIDDLEWARE that extracts the jwt token from this Http Header -> Authorization: Bearer <jwt token>
+// This library CREATES a MIDDLEWARE that extracts the jwt token from this Http Header -> Authorization: Bearer <jwt token>
 // and then verifies it for kosherness ...
-// ******* If it passes verification then it adds the payload in the jwt to the Http Request Object's .user property so downstreamers have access to it
-//         If it failes verification then it creates an err object whose name property is assigned "UnauthorizedError"
+// ******* If it passes verification then 
+//                  it adds the payload in the jwt to the Http Request Object's .user property so downstreamers have access to it
+//         If it failes verification then 
+//                  it creates an err object whose name property is assigned "UnauthorizedError"
 const checkIfAuthenticated = jwt({
     secret: jwksRsa.expressJwtSecret({
         cache: true,
@@ -58,8 +77,10 @@ app.use((err, req, res, next) => {
 
 // EXECUTION will reach this point ONLY if the jwt was verified. Which means everything below this is only available to 
 // authenticated users
+// So, if we want to have an unprotected API then we just need to make sure that we do the app.route() for that API above 
+// the code where the authentication middleware has been placed ---- app.use(checkIfAuthenticated);
 
-// REST API
+// 2 REST APIs
 app.route('/api/lessons').get(readAllLessons);
 app.route('/api/userinfo').put(userInfo);       // Adds user to OUR DATABASE and returns his email address
 
