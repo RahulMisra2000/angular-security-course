@@ -70,7 +70,13 @@ export class AuthService {
         this.http.put<User>('/api/userinfo', null)
             .shareReplay()
             .do(user => this.subject.next(user))
-            .subscribe();
+            .subscribe();   // Unless someone does a subscribe the http request won't go out... that is just how Observables work ...
+            // The /api/userinfo is an EndPoint on the Resource Server that returns the email address inside the jwt
+            // You might think that since we have the jwt in localStorage why doesn't the Angular application extract the payload 
+            // from it and get to the email address
+            // The reason is that the Resource Server is already doing the verification of the jwt that it receives in the http header 
+            // so, it is a better design to let that processing happen in one place ... and the Resource Server offers an EndPoint 
+            // that we can call to get the email address or for that matter anything out of the jwt
     }
 
     logout() {
