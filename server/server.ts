@@ -8,6 +8,8 @@ const bodyParser = require('body-parser');
 
 // These javascript libraries provide API that help us verify the JWT Token that the front-end Angular 
 // application sends to this Resource Server
+// ********** These libraries can be used with OTHER Auth Providers and NOT JUST Auth0 because they are standards based open source
+//            libraries.
 const jwksRsa = require('jwks-rsa');
 const jwt = require('express-jwt');
 
