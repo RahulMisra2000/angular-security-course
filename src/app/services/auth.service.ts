@@ -71,9 +71,17 @@ export class AuthService {
     // In our example, the callback url we have told Auth0 about it https://localhost:4200/lessons
     // So, whichever Angular component that is, in its ngOnInit we should call the method below
     retrieveAuthInfoFromUrl() {  
-        // Auth0 after authenticating, creates token(s) and places them after the # symbol in the callback url we specify to Auth0
-        // In our example since we have requested the Idenity Token and Access Token, we will be receiving both
+        // Auth0 after authenticating, creates token(s) and places them in the hash fragment of the callback url we specified at Auth0 
+        // Portal and here (above) in code also
+        // In our example since we have requested the Identity Token and Access Token, we will be receiving both
+        
         // This method .parseHash() reads the address bar and populates the 2nd parameter (authResult) with it so, we can access it
+        // Once again the auth0-js library has an API that makes it easy to extract that stuff out ...
+      
+        // If we didn't use the library we would have to ourselves access the hash fragment by doing something like
+        // x = window.location.hash  and then we would use basic javascript string manipulation to pull the stuff out from x
+        // For more info : https://auth0.com/docs/application-auth/current/client-side-web#handle-the-callback
+      
         this.auth0.parseHash((err, authResult) => {   // authResult is the javascript object created for us and it contains the stuff after the #
             if (err) {
                 console.log("Could not parse the hash", err);
